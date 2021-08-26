@@ -1,0 +1,44 @@
+C  
+  DFLUX Subroutine Code
+
+  Mohammad Ghadri - 9656018
+  mohammadghadri18@gmail.com
+
+  B.Sc. Project 99-2  
+C  
+  SUBROUTINE DFLUX(FLUX,SOL,KSTEP,KINC,TIME,NOEL,NPT,COORDS,
+     1 JLTYP,TEMP,PRESS,SNAME)
+C
+      INCLUDE 'ABA_PARAM.INC'
+C
+      DIMENSION FLUX(2), TIME(2), COORDS(3)
+      CHARACTER*80 SNAME
+	  T=Time(1)
+      X=COORDS(1)
+	  Y=COORDS(2)
+	  Z=COORDS(3)
+	  X0=0
+	  Y0=0
+	  Z0=0
+	  Vx=-0.001
+	  Vy=0
+	  Vz=0
+	  Xs=Vx*T+X0
+	  Ys=Vy*T+Y0
+	  Zs=Vz*T+Z0
+	  Xf=X-Xs
+	  Yf=Y-Ys
+	  Zf=Z-Zs
+	  R=SQRT(Xf**2+Zf**2)
+	  Rp=0.003
+	  Rs=0.01
+	  Hp=-0.0047
+	  FluxPin=3794640264.77541
+	  FluxShoulder=1194333.62051282
+	  IF(JLTYP.EQ.0 .AND. T.GE.0 .AND. R.LE.Rs .AND. R.GE.Rp)Then
+	  FLUX(1)=FluxShoulder
+	  ELSEIF(JLTYP.EQ.1 .AND. T.GE.0 .AND. R.LE.Rp .AND. Yf.GE.Hp)Then
+	  Flux(1)=FluxPin
+	  ENDIF
+      RETURN
+      END
